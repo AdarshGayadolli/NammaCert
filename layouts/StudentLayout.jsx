@@ -3,9 +3,9 @@ import { Routes, Route } from "react-router-dom";
 import StudentSidebar from "../components/Student/StudentSidebar";
 import StudentHeader from "../components/Student/StudentHeader";
 
-import StudentDashboard from "../pages/student/Dashboard";
-import SearchCourse from "../pages/student/SearchCourse";
-import MyCourse from "../pages/student/MyCourse";
+import StudentDashboard from "../pages/Student/Dashboard";
+import SearchCourse from "../pages/Student/SearchCourse";
+import MyCourse from "../pages/Student/MyCourse";
 import FinishedCourse from "../pages/Student/FinishedCourse";
 
 import "./StudentLayout.css";
