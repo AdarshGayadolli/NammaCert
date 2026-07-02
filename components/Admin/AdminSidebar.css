@@ -1,0 +1,129 @@
+/* ===========================
+   Admin Sidebar
+=========================== */
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #000;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 18px 14px;
+    border-right: 1px solid #1f1f1f;
+}
+
+/* ===========================
+   Logo
+=========================== */
+
+.sidebar-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 35px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #222;
+}
+
+.sidebar-logo img {
+    width: 130px;
+    object-fit: contain;
+}
+
+/* If using text instead of logo */
+
+.sidebar-logo h2 {
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+/* ===========================
+   Section Heading
+=========================== */
+
+.sidebar-heading {
+    color: #8b8b8b;
+    font-size: 11px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 18px 12px 8px;
+}
+
+/* ===========================
+   Sidebar Links
+=========================== */
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px 14px;
+    margin-bottom: 4px;
+
+    color: #ffffff;
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 400;
+
+    border-radius: 6px;
+
+    transition: all 0.25s ease;
+}
+
+/* ===========================
+   Icons
+=========================== */
+
+.sidebar a svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+/* ===========================
+   Hover
+=========================== */
+
+.sidebar a:hover {
+    background: #1a1a1a;
+    color: #ffffff;
+}
+
+/* ===========================
+   Active Menu
+=========================== */
+
+.sidebar a.active {
+    background: #ffffff;
+    color: #000000;
+    font-weight: 400;
+}
+
+/* Active icon */
+
+.sidebar a.active svg {
+    color: #000;
+}
+
+/* ===========================
+   Scrollbar
+=========================== */
+
+.sidebar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #000;
+}

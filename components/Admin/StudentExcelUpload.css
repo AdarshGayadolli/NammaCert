@@ -1,0 +1,92 @@
+.uploadCard {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  margin-top: 20px;
+  border: 1px solid #f0f0f0;
+}
+
+.uploadHeader h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #222;
+}
+
+.uploadHeader p {
+  margin: 5px 0 15px;
+  font-size: 13px;
+  color: #777;
+}
+
+.uploadButtons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.chooseBtn {
+  background: #111;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.chooseBtn:hover {
+  background: #333;
+}
+
+.uploadBtn {
+  background: #1a8f3a;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.uploadBtn:hover {
+  background: #157a31;
+}
+
+.uploadBtn:disabled {
+  background: #9cccaa;
+  cursor: not-allowed;
+}
+
+.fileInfo {
+  margin-top: 8px;
+}
+
+.fileName {
+  font-size: 13px;
+  color: #333;
+  font-weight: 500;
+}
+
+.noFile {
+  font-size: 13px;
+  color: #999;
+}
+
+.status {
+  margin-top: 10px;
+  font-size: 13px;
+  padding: 8px 10px;
+  background: #f4f6f8;
+  border-radius: 6px;
+  color: #444;
+}
+
+.hint {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #888;
+}

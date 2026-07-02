@@ -1,0 +1,199 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Manrope',sans-serif;
+}
+
+.landing-page{
+
+    width:100%;
+    height:calc(100vh - 60px);
+
+    margin-top:60px;
+
+    background-image:url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=2000&q=80");
+
+    background-size:cover;
+    background-position:center;
+}
+
+.landing-overlay{
+
+    width:100%;
+    height:100%;
+
+    background:rgba(0,0,0,.75);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.landing-content{
+
+    width:92%;
+    max-width:1500px;
+}
+
+.landing-heading{
+
+    text-align:center;
+    color:white;
+    margin-bottom:45px;
+}
+
+.landing-heading h1{
+
+    font-size:50px;
+    font-weight:800;
+    margin-bottom:15px;
+}
+
+.landing-heading p{
+
+    font-size:19px;
+    color:#d6d6d6;
+}
+
+.portal-container{
+
+    display:flex;
+    gap:35px;
+}
+
+.portal-card{
+
+    flex:1;
+
+    background:white;
+
+    border-radius:16px;
+
+    overflow:hidden;
+
+    text-decoration:none;
+
+    transition:.35s;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.4);
+}
+
+.portal-card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:0 30px 60px rgba(0,0,0,.45);
+}
+
+.portal-header{
+
+    color:white;
+
+    font-size:24px;
+
+    font-weight:700;
+
+    padding:18px 25px;
+}
+
+/* Admin */
+
+.admin-header{
+
+    background:#0F4C81;
+}
+
+/* Student */
+
+.student-header{
+
+    background:#0F9D58;
+}
+
+.portal-card img{
+
+    width:100%;
+    height:330px;
+    object-fit:cover;
+}
+
+.portal-info{
+
+    padding:30px;
+}
+
+.portal-info h3{
+
+    color:#111;
+
+    font-size:26px;
+
+    margin-bottom:12px;
+}
+
+.portal-info p{
+
+    color:#666;
+
+    line-height:1.8;
+
+    font-size:16px;
+
+    margin-bottom:30px;
+}
+
+.portal-info button{
+
+    border:none;
+
+    padding:14px 28px;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.admin-card button{
+
+    background:#0F4C81;
+}
+
+.student-card button{
+
+    background:#0F9D58;
+}
+
+.portal-info button:hover{
+
+    transform:scale(1.05);
+}
+
+@media(max-width:950px){
+
+.portal-container{
+
+    flex-direction:column;
+}
+
+.landing-page{
+
+    height:auto;
+}
+
+.portal-card{
+
+    margin-bottom:25px;
+}
+}
