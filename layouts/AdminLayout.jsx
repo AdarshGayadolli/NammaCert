@@ -6,7 +6,7 @@ import AdminSidebar from "../components/Admin/AdminSidebar";
 import Dashboard from "../pages/admin/Dashboard";
 import SearchCourse from "../pages/Admin/SearchCourse";
 import AddCourse from "../pages/Admin/AddCourse";
-import EvaluationReport from "../pages/admin/EvaluationReport";
+import EvaluationReport from "../pages/Admin/EvaluationReport";
 import CourseDetails from "../pages/Admin/CourseDetails";
 
 import "./AdminLayout.css";
