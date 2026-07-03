@@ -5,16 +5,67 @@ import medinilogo from "../../src/assets/landingpageimages/medini_new_logo.png";
 import faceArt from "../../src/assets/certificate/sidebar.png";
 import signImg from "../../src/assets/certificate/sign.jpeg";
 
-export default function Certificate({ courseId }) {
-  const [loading, setLoading] = useState(true);
+export default function Certificate({ courseId, course }) {
+  const [loading, setLoading] = useState(!course);
   const [error, setError] = useState("");
   const [cert, setCert] = useState(null);
 
   useEffect(() => {
+    if (course) {
+      // We already have the course data (passed from FinishedCourse) —
+      // build the certificate straight from it, no extra API call needed.
+      setCert(buildCertFromCourse(course));
+      setLoading(false);
+      return;
+    }
+
     if (courseId) {
       fetchCertificate();
     }
-  }, [courseId]);
+  }, [courseId, course]);
+
+  // Reads whatever the app already stored about the logged-in student
+  // (adjust the localStorage key/shape once you confirm what login saves).
+  const getStoredStudent = () => {
+    try {
+      const raw =
+        localStorage.getItem("user") ||
+        localStorage.getItem("student") ||
+        localStorage.getItem("studentData");
+
+      return raw ? JSON.parse(raw) : {};
+    } catch {
+      return {};
+    }
+  };
+
+  const buildCertFromCourse = (course) => {
+    const student = getStoredStudent();
+
+    let duration = "";
+    if (course.startDate && course.endDate) {
+      const start = new Date(course.startDate);
+      const end = new Date(course.endDate);
+      const days =
+        Math.round((end - start) / (1000 * 60 * 60 * 24)) + 1;
+      duration = `${days} day${days !== 1 ? "s" : ""}`;
+    }
+
+    return {
+      studentName:
+        student.name || student.studentName || "Demo Student",
+      department: student.department || "Computer Science & Engineering",
+      college:
+        student.college ||
+        student.collegeName ||
+        "PDA College of Engineering, Kalaburagi",
+      usn: student.usn || student.aidNumber || "1PD21CS000",
+      courseName: course.title || "Demo Course",
+      duration: duration || "10 days",
+      certificationNumber: course.courseId || "DEMO-CERT-0001",
+      issuedDate: course.endDate || new Date().toISOString(),
+    };
+  };
 
   const fetchCertificate = async () => {
     try {
@@ -45,6 +96,18 @@ export default function Certificate({ courseId }) {
   const handlePrint = () => {
     window.print();
   };
+
+  // Auto-trigger the download once the certificate is rendered, so the
+  // student only has to click "Download" once from the course list.
+  useEffect(() => {
+    if (!loading && !error && cert) {
+      const timer = setTimeout(() => {
+        window.print();
+      }, 400);
+
+      return () => clearTimeout(timer);
+    }
+  }, [loading, error, cert]);
 
   if (loading) {
     return <p style={{ padding: "30px", color: "#666" }}>Loading certificate...</p>;

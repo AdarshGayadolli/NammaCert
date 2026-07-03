@@ -145,8 +145,24 @@
     display: none !important;
   }
 
+  /* Hide the rest of the app (sidebar, dashboard header, etc.) and show
+     only the certificate. */
+  body * {
+    visibility: hidden;
+  }
+
+  .cert-page-wrapper,
+  .cert-page-wrapper * {
+    visibility: visible;
+  }
+
   .cert-page-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     padding: 0;
+    margin: 0;
     background: #fff;
   }
 
