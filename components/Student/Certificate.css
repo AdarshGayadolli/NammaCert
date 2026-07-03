@@ -1,14 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Tangerine:wght@700&display=swap');
+
 .cert-page-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px;
+  padding: 20px;
   background: #eee;
   min-height: 100vh;
 }
 
 .cert-download-btn {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   padding: 12px 28px;
   background: #000;
   color: #fff;
@@ -18,121 +20,218 @@
   font-size: 15px;
 }
 
+/* Fixed to A4 landscape physical size (297mm x 210mm) so on-screen preview
+   and printed output always match, and it's always exactly one page. */
 .cert-container {
+  position: relative;
   display: flex;
-  width: 1200px;
-  max-width: 100%;
-  min-height: 780px;
-  background: #fff;
+  align-items: stretch;
+  width: 297mm;
+  height: 210mm;
+  box-sizing: border-box;
+  background: url("../../src/assets/certificate/fullback.jpeg") center / cover
+    no-repeat, #fff;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
-  border: 8px solid #111;
+  border: 3mm solid #111;
+  overflow: hidden;
+}
+
+/* Decorative "tape" corners */
+.cert-container::before,
+.cert-container::after {
+  content: "";
+  position: absolute;
+  top: -5mm;
+  width: 29mm;
+  height: 10mm;
+  background: rgba(255, 250, 235, 0.55);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+}
+
+.cert-container::before {
+  left: 12mm;
+  transform: rotate(-6deg);
+}
+
+.cert-container::after {
+  right: 12mm;
+  transform: rotate(6deg);
 }
 
 /* Left panel */
 .cert-left {
-  width: 32%;
-  background: linear-gradient(180deg, #0a2b6b 0%, #123a8f 60%, #0a2b6b 100%);
-  color: #fff;
-  padding: 30px 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  width: 30%;
+  height: 100%;
   position: relative;
   overflow: hidden;
-}
-
-.cert-logo {
-  width: 180px;
-  height: auto;
-  z-index: 2;
+  background: #0e4d90;
+  box-sizing: border-box;
 }
 
 .cert-face-art {
   position: absolute;
-  top: 90px;
-  left: -10px;
-  width: 110%;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
   z-index: 1;
+  display: block;
+  margin: 0;
+}
+
+.cert-logo {
+  position: absolute;
+  top: 6mm;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 46mm;
+  height: auto;
+  z-index: 3;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));
+  margin: 0;
 }
 
 .cert-footnote {
-  font-size: 9px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  margin: 0;
+  font-size: 6.5px;
   line-height: 1.5;
-  color: #cfd8ee;
-  z-index: 2;
-  margin-top: auto;
+  color: #f2f5fb;
+  padding: 8mm 6mm 5mm;
+  background: linear-gradient(
+    180deg,
+    rgba(9, 32, 74, 0) 0%,
+    rgba(6, 18, 50, 0.75) 35%,
+    rgba(6, 18, 50, 0.92) 100%
+  );
 }
 
 /* Right panel */
 .cert-right {
-  width: 68%;
-  padding: 40px 50px;
+  width: 70%;
+  height: 100%;
+  padding: 8mm 12mm;
   display: flex;
   flex-direction: column;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0) 35%,
+      rgba(10, 43, 107, 0.05) 50%,
+      rgba(255, 255, 255, 0) 65%
+    ),
+    radial-gradient(
+      circle at 85% 8%,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(255, 255, 255, 0) 55%
+    ),
+    repeating-linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.02) 0px,
+      rgba(0, 0, 0, 0.02) 1px,
+      transparent 1px,
+      transparent 16px
+    ),
+    rgba(255, 255, 255, 0.9);
 }
 
 .cert-banner {
-  background: #1a3f8f;
-  padding: 20px 30px;
-  margin: 0 -50px;
+  background: linear-gradient(120deg, #123a8f 0%, #0e4d90 55%, #0a2b6b 100%);
+  padding: 4mm 12mm 6mm;
+  margin: 15mm -12mm 0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .cert-title {
-  font-family: "Playfair Display", Georgia, serif;
-  color: #fff;
-  font-size: 56px;
+  font-family: "UnifrakturMaguntia", "Playfair Display", Georgia, serif;
+  color: #ffffff;
+  font-size: 15mm;
+  font-weight: 400;
   margin: 0;
   text-align: center;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+  line-height: 1;
+  width: 100%;
 }
 
 .cert-subtitle {
-  font-family: "Playfair Display", Georgia, serif;
+  font-family: "Tangerine", "Brush Script MT", cursive;
   text-align: right;
-  color: #1a3f8f;
-  font-size: 30px;
-  margin: 10px 0 25px 0;
+  color: #0e4d90;
+  font-size: 14mm;
+  font-weight: 700;
+  margin: 3mm 0 5mm 0;
+  flex-shrink: 0;
+}
+
+.cert-body {
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
 }
 
 .cert-body p {
-  font-size: 14px;
-  line-height: 1.9;
+  font-size: 13.5px;
+  line-height: 1.75;
   color: #1a1a1a;
-  margin: 0 0 10px 0;
+  margin: 0 0 8px 0;
+  text-align: justify;
 }
 
 .cert-field {
-  margin-top: 16px !important;
+  margin-top: 13px !important;
 }
 
 .cert-line {
   display: inline-block;
-  border-bottom: 1px solid #333;
+  border-bottom: 1.5px dotted #333;
   padding: 0 4px;
   font-weight: 600;
+  max-width: 100%;
+  text-align: center;
 }
 
 .cert-congrats {
-  font-family: "Brush Script MT", cursive;
-  font-size: 40px;
-  color: #1a3f8f;
-  margin: 25px 0 0 0;
+  font-family: "Tangerine", "Brush Script MT", cursive;
+  font-size: 16mm;
+  font-weight: 700;
+  color: #0e4d90;
+  margin: 3mm 0 0 0;
+  flex-shrink: 0;
 }
 
 .cert-signature {
   margin-top: auto;
   text-align: right;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 600;
   color: #1a1a1a;
   line-height: 1.6;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
 }
 
 .cert-sign-img {
-  height: 60px;
+  height: 25mm;
   width: auto;
   display: block;
   margin-left: auto;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 }
 
 .cert-signatory-name {
@@ -145,15 +244,24 @@
     display: none !important;
   }
 
-  /* Hide the rest of the app (sidebar, dashboard header, etc.) and show
-     only the certificate. */
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
   body * {
     visibility: hidden;
   }
 
+  /* Force backgrounds/colors to actually print — without this, Chrome
+     strips the navy banner, left panel fill, and footnote gradient. */
   .cert-page-wrapper,
   .cert-page-wrapper * {
     visibility: visible;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    accent-color: exact !important;
   }
 
   .cert-page-wrapper {
@@ -168,12 +276,23 @@
 
   .cert-container {
     box-shadow: none;
-    width: 100%;
-    min-height: 100vh;
+    width: 297mm;
+    height: 210mm;
+    margin: 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
   }
 
+  .cert-container::before,
+  .cert-container::after {
+    display: none;
+  }
+
+  /* Explicit physical page size matching the container exactly — this is
+     what makes the print dialog auto-select Landscape correctly instead
+     of squishing the layout into Portrait. */
   @page {
-    size: landscape;
+    size: 297mm 210mm;
     margin: 0;
   }
 }

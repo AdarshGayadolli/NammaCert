@@ -103,7 +103,7 @@ export default function Certificate({ courseId, course }) {
     if (!loading && !error && cert) {
       const timer = setTimeout(() => {
         window.print();
-      }, 400);
+      }, 500);
 
       return () => clearTimeout(timer);
     }
@@ -121,8 +121,6 @@ export default function Certificate({ courseId, course }) {
     return null;
   }
 
-  // Map API fields with fallbacks so missing data shows a blank line,
-  // same as the paper template.
   const studentName = cert.studentName || cert.name || "";
   const department = cert.department || "";
   const college = cert.college || cert.collegeName || "PDA College of Engineering, Kalaburagi";
@@ -139,10 +137,7 @@ export default function Certificate({ courseId, course }) {
   const signatoryCompany = cert.signatoryCompany || "Medini Technologies";
 
   const Line = ({ value, minWidth = 160 }) => (
-    <span
-      className="cert-line"
-      style={{ minWidth }}
-    >
+    <span className="cert-line" style={{ minWidth }}>
       {value || "\u00A0"}
     </span>
   );
@@ -156,9 +151,13 @@ export default function Certificate({ courseId, course }) {
       <div className="cert-container">
         {/* Left panel */}
         <div className="cert-left">
-          <img src={medinilogo} alt="Medini Technologies" className="cert-logo" />
-
           <img src={faceArt} alt="" className="cert-face-art" />
+
+          <img
+            src={medinilogo}
+            alt="Medini Technologies"
+            className="cert-logo"
+          />
 
           <p className="cert-footnote">
             Medini and Medini logo are the registered trademarks or trademarks
@@ -182,11 +181,11 @@ export default function Certificate({ courseId, course }) {
 
           <div className="cert-body">
             <p>
-              This is to certify that <Line value={studentName} minWidth={280} />{" "}
-              from the Department of <Line value={department} minWidth={260} />,
-              of <Line value={college} minWidth={300} />, bearing USN/AID No.:{" "}
-              <Line value={usn} minWidth={200} />, has successfully completed
-              the training program on <Line value={courseName} minWidth={280} />.
+              This is to certify that <Line value={studentName} minWidth={200} />{" "}
+              from the Department of <Line value={department} minWidth={190} />,
+              of <Line value={college} minWidth={220} />, bearing USN/AID No.:{" "}
+              <Line value={usn} minWidth={140} />, has successfully completed
+              the training program on <Line value={courseName} minWidth={200} />.
             </p>
 
             <p>
