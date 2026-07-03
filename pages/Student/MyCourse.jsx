@@ -36,7 +36,13 @@ export default function MyCourse() {
         data = response.data.data.courses;
       }
 
-      setCourses(data);
+      // initialize surveyCompleted flag
+      const updatedData = data.map((course) => ({
+        ...course,
+        surveyCompleted: course.surveyCompleted || false,
+      }));
+
+      setCourses(updatedData);
     } catch (err) {
       console.error(err);
 
@@ -50,10 +56,27 @@ export default function MyCourse() {
   };
 
   const handleSurvey = (course) => {
-  setSelectedCourse(course);
-  setSelectedCourseId(course.courseId);
-  setShowSurvey(true);
-};
+    if (course.surveyCompleted) return;
+
+    setSelectedCourse(course);
+    setSelectedCourseId(course.courseId);
+    setShowSurvey(true);
+  };
+
+  const handleSurveyCompleted = () => {
+    setCourses((prev) =>
+      prev.map((course) =>
+        course.courseId === selectedCourseId
+          ? {
+              ...course,
+              surveyCompleted: true,
+            }
+          : course
+      )
+    );
+
+    setShowSurvey(false);
+  };
 
   return (
     <div style={{ padding: "30px" }}>
@@ -104,11 +127,7 @@ export default function MyCourse() {
         {!loading &&
           !error &&
           courses.length > 0 && (
-            <div
-              style={{
-                overflowX: "auto",
-              }}
-            >
+            <div style={{ overflowX: "auto" }}>
               <table
                 style={{
                   width: "100%",
@@ -135,11 +154,7 @@ export default function MyCourse() {
 
                 <tbody>
                   {courses.map((course, index) => (
-                    <tr
-                      key={
-                        course.courseId || index
-                      }
-                    >
+                    <tr key={course.courseId || index}>
                       <td style={tdStyle}>
                         {course.courseId || "-"}
                       </td>
@@ -179,25 +194,33 @@ export default function MyCourse() {
                       </td>
 
                       <td style={tdStyle}>
-                        <button
-                          onClick={() => handleSurvey(course)}
-                          style={{
-                            background:
-                              "#000",
-                            color: "#fff",
-                            border: "none",
-                            padding:
-                              "8px 15px",
-                            borderRadius:
-                              "6px",
-                            cursor:
-                              "pointer",
-                            fontWeight:
-                              "500",
-                          }}
-                        >
-                          Give Survey
-                        </button>
+                        {course.surveyCompleted ? (
+                          <span
+                            style={{
+                              color: "green",
+                              fontWeight: "700",
+                            }}
+                          >
+                            ✓ Survey Completed
+                          </span>
+                        ) : (
+                          <button
+                            onClick={() =>
+                              handleSurvey(course)
+                            }
+                            style={{
+                              background: "#000",
+                              color: "#fff",
+                              border: "none",
+                              padding: "8px 15px",
+                              borderRadius: "6px",
+                              cursor: "pointer",
+                              fontWeight: "500",
+                            }}
+                          >
+                            Give Survey
+                          </button>
+                        )}
                       </td>
                     </tr>
                   ))}
@@ -209,9 +232,9 @@ export default function MyCourse() {
         <SurveyModal
           open={showSurvey}
           courseId={selectedCourseId}
-          onClose={() =>
-            setShowSurvey(false)
-          }
+          course={selectedCourse}
+          onClose={() => setShowSurvey(false)}
+          onSurveyCompleted={handleSurveyCompleted}
         />
       </div>
     </div>

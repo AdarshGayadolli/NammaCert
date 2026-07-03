@@ -1,100 +1,194 @@
+import { useEffect, useState } from "react";
+import api from "../../src/services/api";
+import Certificate from "../../components/Student/Certificate";
+
 export default function FinishedCourse() {
-  return (
-    <div
-      style={{
-        padding: "30px",
-      }}
-    >
-      {/* Page Header */}
-      <div style={{ marginBottom: "30px" }}>
-        <h1
+  const [loading, setLoading] = useState(true);
+  const [courses, setCourses] = useState([]);
+  const [error, setError] = useState("");
+  const [selectedCourse, setSelectedCourse] = useState(null);
+
+  useEffect(() => {
+    fetchCompletedCourses();
+  }, []);
+
+  const fetchCompletedCourses = async () => {
+    try {
+      setLoading(true);
+      setError("");
+
+      const response = await api.get("/student/courses/completed");
+
+      console.log("Completed Courses Response:", response.data);
+
+      const data = response.data.data || response.data;
+
+      setCourses(
+        data.courses ||
+          data.completedCourses ||
+          data ||
+          []
+      );
+    } catch (err) {
+      console.error("Failed to fetch completed courses:", err);
+
+      setError(
+        err?.response?.data?.message ||
+          "Unable to load completed courses."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Just opens the certificate view — Certificate.jsx fills in dummy
+  // demo data wherever real fields aren't available yet.
+  const handleDownloadCertificate = (course) => {
+    setSelectedCourse(course);
+  };
+
+  if (selectedCourse) {
+    return (
+      <div>
+        <button
+          onClick={() => setSelectedCourse(null)}
+          className="no-print"
           style={{
-            fontSize: "30px",
-            fontWeight: "600",
+            margin: "20px 0 0 20px",
+            padding: "10px 20px",
+            background: "#eee",
             color: "#111",
+            border: "1px solid #ccc",
+            borderRadius: "6px",
+            cursor: "pointer",
+            fontSize: "14px",
           }}
         >
-          Finished Courses
-        </h1>
+          ← Back to Finished Courses
+        </button>
 
-        <p
-          style={{
-            color: "#666",
-            marginTop: "8px",
-          }}
-        >
-          View all the courses that you have successfully completed.
-        </p>
+        <Certificate course={selectedCourse} />
       </div>
+    );
+  }
 
-      {/* Test Card */}
-
-      <div
+  return (
+    <div style={{ padding: "30px" }}>
+      <h1
         style={{
-          background: "#fff",
-          border: "1px solid #ddd",
-          borderRadius: "10px",
-          padding: "25px",
+          fontSize: "24px",
+          fontWeight: "600",
+          color: "#111",
           marginBottom: "20px",
         }}
       >
-        <h2>🎉 Congratulations!</h2>
+        Finished Courses
+      </h1>
 
-        <p style={{ marginTop: "10px", color: "#555" }}>
-          You have successfully navigated to the
-          <strong> Finished Courses </strong>
-          page.
+      {loading && <p style={{ color: "#666" }}>Loading...</p>}
+
+      {!loading && error && (
+        <p style={{ color: "#b42318" }}>{error}</p>
+      )}
+
+      {!loading && !error && courses.length === 0 && (
+        <p style={{ color: "#666" }}>
+          You haven't completed any courses yet.
         </p>
+      )}
 
-        <p style={{ marginTop: "10px", color: "#555" }}>
-          Once the backend is connected, all the completed courses,
-          completion date, instructor details, progress, and certificate
-          download option will be displayed here.
-        </p>
-
-        <button
+      {!loading && !error && courses.length > 0 && (
+        <table
           style={{
-            marginTop: "20px",
-            padding: "12px 25px",
-            background: "#000",
-            color: "#fff",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-            fontSize: "15px",
+            width: "100%",
+            borderCollapse: "collapse",
           }}
         >
-          Download Certificate (Demo)
-        </button>
-      </div>
+          <thead>
+            <tr>
+              <th style={thStyle}>Course</th>
+              <th style={thStyle}>Instructor</th>
+              <th style={thStyle}>Completion Date</th>
+              <th style={thStyle}>Progress</th>
+              <th style={thStyle}>Certificate</th>
+            </tr>
+          </thead>
 
-      {/* Information Section */}
+          <tbody>
+            {courses.map((course, index) => {
+              const courseId = course._id || course.id || index;
 
-      <div
-        style={{
-          background: "#fafafa",
-          border: "1px dashed #ccc",
-          borderRadius: "10px",
-          padding: "20px",
-        }}
-      >
-        <h3>Upcoming Features</h3>
+              const title =
+                course.title ||
+                course.courseTitle ||
+                course.name ||
+                "Untitled Course";
 
-        <ul
-          style={{
-            marginTop: "15px",
-            lineHeight: "2",
-            color: "#555",
-          }}
-        >
-          <li>✔ View Completed Courses</li>
-          <li>✔ Course Completion Date</li>
-          <li>✔ Instructor Details</li>
-          <li>✔ Download Certificate</li>
-          <li>✔ View Course Report</li>
-          <li>✔ Student Performance</li>
-        </ul>
-      </div>
+              const completionDate =
+                course.completionDate ||
+                course.completedAt ||
+                course.finishedAt ||
+                null;
+
+              const instructor =
+                course.instructor?.name ||
+                course.instructorName ||
+                course.instructor ||
+                "-";
+
+              const progress =
+                course.progress !== undefined
+                  ? `${course.progress}%`
+                  : "100%";
+
+              return (
+                <tr key={courseId}>
+                  <td style={tdStyle}>{title}</td>
+                  <td style={tdStyle}>{instructor}</td>
+                  <td style={tdStyle}>
+                    {completionDate
+                      ? new Date(completionDate).toLocaleDateString()
+                      : "-"}
+                  </td>
+                  <td style={tdStyle}>{progress}</td>
+                  <td style={tdStyle}>
+                    <button
+                      onClick={() => handleDownloadCertificate(course)}
+                      style={{
+                        padding: "6px 14px",
+                        background: "#000",
+                        color: "#fff",
+                        border: "none",
+                        borderRadius: "6px",
+                        cursor: "pointer",
+                        fontSize: "13px",
+                      }}
+                    >
+                      Download
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }
+
+const thStyle = {
+  textAlign: "left",
+  padding: "10px 12px",
+  borderBottom: "2px solid #ddd",
+  fontSize: "13px",
+  color: "#666",
+  textTransform: "uppercase",
+};
+
+const tdStyle = {
+  padding: "10px 12px",
+  borderBottom: "1px solid #eee",
+  fontSize: "14px",
+  color: "#333",
+};

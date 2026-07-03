@@ -7,6 +7,7 @@ export default function SurveyModal({
   courseId,
   course,
   onClose,
+  onSurveyCompleted,
 }) {
   const [loading, setLoading] = useState(false);
   const [survey, setSurvey] = useState(null);
@@ -24,6 +25,8 @@ export default function SurveyModal({
     try {
       setLoading(true);
       setError("");
+      setQuestions([]);
+      setAnswers({});
 
       const response = await api.get(
         `/student/courses/${courseId}/survey`
@@ -44,6 +47,18 @@ export default function SurveyModal({
     } catch (err) {
       console.error(err);
 
+      // Survey already completed
+      if (err.response?.status === 409) {
+        alert("Survey already completed.");
+
+        if (onSurveyCompleted) {
+          onSurveyCompleted(courseId);
+        }
+
+        onClose();
+        return;
+      }
+
       setError(
         err?.response?.data?.message ||
           "Unable to load survey."
@@ -53,20 +68,20 @@ export default function SurveyModal({
     }
   };
 
-  const handleOptionChange = (
-    questionId,
-    option
-  ) => {
+  const getQuestionId = (question, index) =>
+    question._id ||
+    question.id ||
+    question.questionId ||
+    index;
+
+  const handleOptionChange = (questionId, option) => {
     setAnswers((prev) => ({
       ...prev,
       [questionId]: option,
     }));
   };
 
-  const handleTextChange = (
-    questionId,
-    value
-  ) => {
+  const handleTextChange = (questionId, value) => {
     setAnswers((prev) => ({
       ...prev,
       [questionId]: value,
@@ -75,20 +90,86 @@ export default function SurveyModal({
 
   const handleSubmit = async () => {
     try {
-      console.log("Course :", courseId);
-      console.log("Answers :", answers);
+      console.log("Questions:", questions);
+      console.log("Current answers state:", answers);
 
-      // Submission API will be added later
+      // Validate answers
+      for (let index = 0; index < questions.length; index++) {
+        const question = questions[index];
+        const questionId = getQuestionId(question, index);
+
+        if (
+          answers[questionId] === undefined ||
+          answers[questionId] === ""
+        ) {
+          console.log(
+            "Validation failed on question:",
+            index,
+            "expected key:",
+            questionId,
+            "question object:",
+            question,
+            "answers so far:",
+            answers
+          );
+          alert("Please answer all questions.");
+          return;
+        }
+      }
+
+      // Generic payload (change if backend expects another format)
+      const payload = {
+        answers: questions.map((question, index) => {
+          const questionId = getQuestionId(question, index);
+
+          return {
+            questionId,
+            answer: answers[questionId],
+          };
+        }),
+      };
+
+      console.log(
+        "About to POST survey ->",
+        `/student/courses/${courseId}/survey`,
+        payload
+      );
+
+      const response = await api.post(
+        `/student/courses/${courseId}/survey`,
+        payload
+      );
+
+      console.log("Survey Submit Response:", response.data);
 
       alert(
-        "Survey Submitted Successfully."
+        response.data?.message ||
+          "Survey submitted successfully."
       );
+
+      if (onSurveyCompleted) {
+        onSurveyCompleted(courseId);
+      }
 
       onClose();
     } catch (err) {
-      console.error(err);
+      console.error("Survey submit error:", err);
 
-      alert("Failed to submit survey.");
+      if (err.response?.status === 409) {
+        alert("Survey already submitted.");
+
+        if (onSurveyCompleted) {
+          onSurveyCompleted(courseId);
+        }
+
+        onClose();
+        return;
+      }
+
+      alert(
+        err.response?.data?.message ||
+          "Failed to submit survey."
+      );
     }
   };
 
@@ -96,11 +177,9 @@ export default function SurveyModal({
 
   return (
     <div className="survey-overlay">
-
       <div className="survey-modal">
 
         <div className="survey-header">
-
           <h2>Course Survey</h2>
 
           <button
@@ -109,7 +188,6 @@ export default function SurveyModal({
           >
             ✕
           </button>
-
         </div>
 
         {loading && (
@@ -118,18 +196,15 @@ export default function SurveyModal({
           </div>
         )}
 
-        {error && (
+        {!loading && error && (
           <div className="error">
             {error}
           </div>
         )}
 
         {!loading && !error && (
-
           <>
-
             <div className="course-title">
-
               <h3>
                 {course?.title ||
                   survey?.title ||
@@ -137,130 +212,102 @@ export default function SurveyModal({
               </h3>
 
               <p>
-                <strong>Course ID :</strong>{" "}
+                <strong>Course ID:</strong>{" "}
                 {courseId}
               </p>
 
               <p>
-                <strong>Course Type :</strong>{" "}
+                <strong>Course Type:</strong>{" "}
                 {course?.courseType ||
                   survey?.courseType ||
                   "-"}
               </p>
-
             </div>
 
             <div className="survey-body">
-
               {questions.length === 0 ? (
-
                 <div
                   style={{
                     textAlign: "center",
                     padding: "40px",
-                    fontWeight: "500",
+                    fontWeight: "600",
                   }}
                 >
                   No Survey Available
                 </div>
-
               ) : (
+                questions.map((question, index) => {
+                  const questionId = getQuestionId(question, index);
 
-                questions.map(
-                  (question, index) => {
+                  const questionText =
+                    question.question ||
+                    question.title ||
+                    question.text ||
+                    `Question ${index + 1}`;
 
-                    const questionId =
-                      question._id ||
-                      question.id ||
-                      index;
+                  const options =
+                    question.options ||
+                    question.choices ||
+                    [];
 
-                    const options =
-                      question.options ||
-                      question.choices ||
-                      [];
+                  return (
+                    <div
+                      className="question-card"
+                      key={questionId}
+                    >
+                      <label className="question-title">
+                        {index + 1}. {questionText}
+                      </label>
 
-                    return (
+                      {options.length > 0 ? (
+                        options.map((option, i) => (
+                          <label
+                            className="radio-option"
+                            key={i}
+                          >
+                            <input
+                              type="radio"
+                              name={`question-${questionId}`}
+                              checked={
+                                answers[
+                                  questionId
+                                ] === option
+                              }
+                              onChange={() =>
+                                handleOptionChange(
+                                  questionId,
+                                  option
+                                )
+                              }
+                            />
 
-                      <div
-                        className="question-card"
-                        key={questionId}
-                      >
-
-                        <label className="question-title">
-
-                          {index + 1}.{" "}
-
-                          {question.question ||
-                            question.title ||
-                            question.text}
-
-                        </label>
-
-                        {options.length > 0 ? (
-
-                          options.map(
-                            (option, i) => (
-
-                              <label
-                                key={i}
-                                className="radio-option"
-                              >
-
-                                <input
-                                  type="radio"
-                                  name={`question-${questionId}`}
-                                  checked={
-                                    answers[
-                                      questionId
-                                    ] === option
-                                  }
-                                  onChange={() =>
-                                    handleOptionChange(
-                                      questionId,
-                                      option
-                                    )
-                                  }
-                                />
-
-                                {option}
-
-                              </label>
-
+                            {option}
+                          </label>
+                        ))
+                      ) : (
+                        <textarea
+                          rows={4}
+                          placeholder="Enter your answer..."
+                          value={
+                            answers[
+                              questionId
+                            ] || ""
+                          }
+                          onChange={(e) =>
+                            handleTextChange(
+                              questionId,
+                              e.target.value
                             )
-                          )
-
-                        ) : (
-
-                          <textarea
-                            rows={4}
-                            placeholder="Enter your answer..."
-                            value={
-                              answers[
-                                questionId
-                              ] || ""
-                            }
-                            onChange={(e) =>
-                              handleTextChange(
-                                questionId,
-                                e.target.value
-                              )
-                            }
-                          />
-
-                        )}
-
-                      </div>
-
-                    );
-                  }
-                )
-
+                          }
+                        />
+                      )}
+                    </div>
+                  );
+                })
               )}
-
             </div>
 
             <div className="survey-footer">
-
               <button
                 className="cancel-btn"
                 onClick={onClose}
@@ -268,21 +315,19 @@ export default function SurveyModal({
                 Close
               </button>
 
-              <button
-                className="submit-btn"
-                onClick={handleSubmit}
-              >
-                Submit Survey
-              </button>
-
+              {questions.length > 0 && (
+                <button
+                  className="submit-btn"
+                  onClick={handleSubmit}
+                >
+                  Submit Survey
+                </button>
+              )}
             </div>
-
           </>
-
         )}
 
       </div>
-
     </div>
   );
 }

@@ -1,0 +1,163 @@
+.cert-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  background: #eee;
+  min-height: 100vh;
+}
+
+.cert-download-btn {
+  margin-bottom: 20px;
+  padding: 12px 28px;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.cert-container {
+  display: flex;
+  width: 1200px;
+  max-width: 100%;
+  min-height: 780px;
+  background: #fff;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+  border: 8px solid #111;
+}
+
+/* Left panel */
+.cert-left {
+  width: 32%;
+  background: linear-gradient(180deg, #0a2b6b 0%, #123a8f 60%, #0a2b6b 100%);
+  color: #fff;
+  padding: 30px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.cert-logo {
+  width: 180px;
+  height: auto;
+  z-index: 2;
+}
+
+.cert-face-art {
+  position: absolute;
+  top: 90px;
+  left: -10px;
+  width: 110%;
+  z-index: 1;
+}
+
+.cert-footnote {
+  font-size: 9px;
+  line-height: 1.5;
+  color: #cfd8ee;
+  z-index: 2;
+  margin-top: auto;
+}
+
+/* Right panel */
+.cert-right {
+  width: 68%;
+  padding: 40px 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cert-banner {
+  background: #1a3f8f;
+  padding: 20px 30px;
+  margin: 0 -50px;
+}
+
+.cert-title {
+  font-family: "Playfair Display", Georgia, serif;
+  color: #fff;
+  font-size: 56px;
+  margin: 0;
+  text-align: center;
+}
+
+.cert-subtitle {
+  font-family: "Playfair Display", Georgia, serif;
+  text-align: right;
+  color: #1a3f8f;
+  font-size: 30px;
+  margin: 10px 0 25px 0;
+}
+
+.cert-body p {
+  font-size: 14px;
+  line-height: 1.9;
+  color: #1a1a1a;
+  margin: 0 0 10px 0;
+}
+
+.cert-field {
+  margin-top: 16px !important;
+}
+
+.cert-line {
+  display: inline-block;
+  border-bottom: 1px solid #333;
+  padding: 0 4px;
+  font-weight: 600;
+}
+
+.cert-congrats {
+  font-family: "Brush Script MT", cursive;
+  font-size: 40px;
+  color: #1a3f8f;
+  margin: 25px 0 0 0;
+}
+
+.cert-signature {
+  margin-top: auto;
+  text-align: right;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a1a;
+  line-height: 1.6;
+}
+
+.cert-sign-img {
+  height: 60px;
+  width: auto;
+  display: block;
+  margin-left: auto;
+  margin-bottom: 4px;
+}
+
+.cert-signatory-name {
+  margin-bottom: 2px;
+}
+
+/* Print settings */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .cert-page-wrapper {
+    padding: 0;
+    background: #fff;
+  }
+
+  .cert-container {
+    box-shadow: none;
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  @page {
+    size: landscape;
+    margin: 0;
+  }
+}
