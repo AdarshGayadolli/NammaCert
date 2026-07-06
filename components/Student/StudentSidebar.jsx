@@ -8,7 +8,9 @@ import {
 } from "lucide-react";
 
 // Reuse Admin Sidebar CSS
-import "../Admin/AdminSidebar.css";
+import "../../components/Student/StudentSidebar.css";
+
+import medinilogo from "../../src/assets/landingpageimages/medini_new_logo.png";
 
 export default function StudentSidebar() {
 
@@ -17,7 +19,11 @@ export default function StudentSidebar() {
         <aside className="sidebar">
 
             <div className="sidebar-logo">
-                MEDINI
+                <img
+                    src={medinilogo}
+                    alt="Medini Technologies"
+                    className="sidebar-logo-img"
+                />
             </div>
 
             <NavLink to="/student">
