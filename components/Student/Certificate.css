@@ -113,11 +113,10 @@
   );
 }
 
-/* Right panel */
 .cert-right {
   width: 70%;
   height: 100%;
-  padding: 8mm 12mm;
+  padding: 8mm 8mm 8mm 12mm;   /* reduced right padding from 12mm to 8mm */
   display: flex;
   flex-direction: column;
   position: relative;
@@ -144,7 +143,6 @@
     ),
     rgba(255, 255, 255, 0.9);
 }
-
 .cert-banner {
   background: linear-gradient(120deg, #123a8f 0%, #0e4d90 55%, #0a2b6b 100%);
   padding: 4mm 12mm 6mm;
