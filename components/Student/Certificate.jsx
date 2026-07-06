@@ -89,7 +89,7 @@ export default function Certificate({ courseId, course }) {
           "Unable to load certificate."
       );
     } finally {
-      setLoading(false);
+      setLoading(false); 
     }
   };
 
