@@ -20,6 +20,29 @@
   color: #777;
 }
 
+/* Template download button — sits above the choose/upload row so admins
+   see it first and know the expected format before picking a file. */
+.templateBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #eef4ff;
+  color: #1a56db;
+  border: 1px solid #c8dcfb;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 14px;
+  transition: 0.2s;
+}
+
+.templateBtn:hover {
+  background: #dce9ff;
+  border-color: #a9c8f7;
+}
+
 .uploadButtons {
   display: flex;
   gap: 10px;

@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import api from "../../src/services/api";
 import "./StudentExcelUpload.css";
+import sampleTemplate from "../../src/assets/studenttemplate.xlsx";
 
 export default function StudentExcelUpload() {
   const inputRef = useRef();
@@ -10,7 +11,6 @@ export default function StudentExcelUpload() {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
 
-  // Extract courseId from URL safely
   const courseId = window.location.pathname.split("/").pop();
 
   const openPicker = () => {
@@ -70,6 +70,17 @@ export default function StudentExcelUpload() {
     }
   };
 
+  // Downloads the sample template so admins know the exact column
+  // format expected before uploading their own file.
+  const handleDownloadTemplate = () => {
+    const link = document.createElement("a");
+    link.href = sampleTemplate;
+    link.download = "student_upload_template.xlsx";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="uploadCard">
 
@@ -87,6 +98,15 @@ export default function StudentExcelUpload() {
         onChange={handleChange}
         hidden
       />
+
+      {/* TEMPLATE DOWNLOAD */}
+      <button
+        type="button"
+        className="templateBtn"
+        onClick={handleDownloadTemplate}
+      >
+        ⬇ Download Sample Template
+      </button>
 
       {/* BUTTONS */}
       <div className="uploadButtons">

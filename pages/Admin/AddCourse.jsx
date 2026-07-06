@@ -9,7 +9,6 @@ const AddCourse = () => {
   const [formData, setFormData] = useState({
     courseType: "",
     title: "", // backend requires "title" (confirmed from expected payload)
-    description: "",
     trainerId: "",
     startDate: "",
     endDate: "",
@@ -18,8 +17,8 @@ const AddCourse = () => {
       value: "",
       unit: "Months",
     },
-    instituteName: "", // now sent to backend as-is; no longer stripped
-    courseImage: "",
+    instituteName: "", // used for Academic courses
+    productName: "", // used for Retail courses
   });
 
   const [loading, setLoading] = useState(false);
@@ -52,8 +51,8 @@ const AddCourse = () => {
 
       // trainerId can be any string — no client-side format
       // restriction; backend validates it if needed.
-      // instituteName is included as-is (backend expects it,
-      // at least for Academic courses).
+      // instituteName is sent for Academic courses, productName for
+      // Retail courses — backend expects whichever applies.
       await api.post("/admin/courses", {
         ...formData,
       });
@@ -94,6 +93,7 @@ const AddCourse = () => {
                 ...p,
                 courseType: val,
                 instituteName: val === "Academic" ? p.instituteName : "",
+                productName: val === "Retail" ? p.productName : "",
               }))
             }
           />
@@ -103,6 +103,16 @@ const AddCourse = () => {
               name="instituteName"
               placeholder="Institute Name"
               value={formData.instituteName}
+              onChange={handleChange}
+              className="input"
+            />
+          )}
+
+          {formData.courseType === "Retail" && (
+            <input
+              name="productName"
+              placeholder="Product Name"
+              value={formData.productName}
               onChange={handleChange}
               className="input"
             />
@@ -170,34 +180,12 @@ const AddCourse = () => {
             onChange={(e) => handleDurationChange("unit", e.target.value)}
             className="input"
           >
+            <option value="Hours">Hours</option>
             <option value="Days">Days</option>
             <option value="Weeks">Weeks</option>
             <option value="Months">Months</option>
             <option value="Years">Years</option>
           </select>
-        </div>
-
-        {/* ROW 4 */}
-        <div className="row">
-          <input
-            name="courseImage"
-            placeholder="Course Image URL"
-            value={formData.courseImage}
-            onChange={handleChange}
-            className="input"
-          />
-        </div>
-
-        {/* ROW 5 */}
-        <div className="row">
-          <textarea
-            name="description"
-            placeholder="Course Description"
-            value={formData.description}
-            onChange={handleChange}
-            className="input"
-            rows={3}
-          />
         </div>
 
         <button className="btn" disabled={loading}>
