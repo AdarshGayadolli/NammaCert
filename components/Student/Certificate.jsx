@@ -103,7 +103,7 @@ export default function Certificate({ courseId, course }) {
     if (!loading && !error && cert) {
       const timer = setTimeout(() => {
         window.print();
-      }, 500);
+      }, 600);
 
       return () => clearTimeout(timer);
     }
@@ -177,49 +177,53 @@ export default function Certificate({ courseId, course }) {
             <h1 className="cert-title">Certificate</h1>
           </div>
 
-          <h2 className="cert-subtitle">of Completion</h2>
+          <h2 className="cert-subtitle">
+            <span className="cert-subtitle-spacer" aria-hidden="true">
+              Certificate
+            </span>
+            of Completion
+          </h2>
 
           <div className="cert-body">
-            <p>
-              This is to certify that <Line value={studentName} minWidth={200} />{" "}
-              from the Department of <Line value={department} minWidth={190} />,
-              of <Line value={college} minWidth={220} />, bearing USN/AID No.:{" "}
-              <Line value={usn} minWidth={140} />, has successfully completed
-              the training program on <Line value={courseName} minWidth={200} />.
+            <p className="cert-paragraph">
+              <strong>This is to certify</strong> that{" "}
+              <Line value={studentName} minWidth={190} />, a student of{" "}
+              <Line value={department} minWidth={170} /> from{" "}
+              <Line value={college} minWidth={210} /> (USN/AID No.{" "}
+              <Line value={usn} minWidth={110} />), has successfully
+              completed the course{" "}
+              <Line value={courseName} minWidth={190} /> over a duration of{" "}
+              <Line value={duration} minWidth={80} />, conducted by Medini
+              Technologies.
             </p>
 
-            <p>
-              The candidate has successfully fulfilled practical requirements
-              of the program during the training period.
+            <p className="cert-paragraph">
+              The candidate has successfully fulfilled all practical
+              requirements of the program during the training period and has
+              demonstrated satisfactory proficiency in the course curriculum.
             </p>
 
-            <p>
-              The duration for the course was: <Line value={duration} />
-            </p>
-
-            <p className="cert-field">
-              <strong>Certification Number:</strong>{" "}
-              <Line value={certificationNumber} />
-            </p>
-
-            <p>
-              We appreciate the participant's dedication, commitment, and
-              successful completion of the program and wish him/her success
-              in his/her future endeavours.
-            </p>
-
-            <p className="cert-field">
-              <strong><u>Issued Date:</u></strong> <Line value={issuedDate} />
+            <p className="cert-meta">
+              <span>
+                <strong>Certification Number:</strong>{" "}
+                <Line value={certificationNumber} minWidth={100} />
+              </span>
+              <span>
+                <strong><u>Issued Date:</u></strong>{" "}
+                <Line value={issuedDate} minWidth={90} />
+              </span>
             </p>
           </div>
 
           <p className="cert-congrats">Congratulations!</p>
 
           <div className="cert-signature">
-            <img src={signImg} alt={signatoryName} className="cert-sign-img" />
-            <p className="cert-signatory-name">{signatoryName}</p>
-            <p>{signatoryTitle}</p>
-            <p>{signatoryCompany}</p>
+            <div className="cert-signature-inner">
+              <img src={signImg} alt={signatoryName} className="cert-sign-img" />
+              <p className="cert-signatory-name">{signatoryName}</p>
+              <p>{signatoryTitle}</p>
+              <p>{signatoryCompany}</p>
+            </div>
           </div>
         </div>
       </div>

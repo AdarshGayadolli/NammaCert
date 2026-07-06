@@ -87,7 +87,7 @@
   top: 6mm;
   left: 50%;
   transform: translateX(-50%);
-  width: 46mm;
+  width: 58mm;
   height: auto;
   z-index: 3;
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));
@@ -148,7 +148,7 @@
 .cert-banner {
   background: linear-gradient(120deg, #123a8f 0%, #0e4d90 55%, #0a2b6b 100%);
   padding: 4mm 12mm 6mm;
-  margin: 15mm -12mm 0;
+  margin: 8mm -12mm 0;
   flex-shrink: 0;
   display: flex;
   align-items: flex-end;
@@ -158,26 +158,44 @@
 .cert-title {
   font-family: "UnifrakturMaguntia", "Playfair Display", Georgia, serif;
   color: #ffffff;
-  font-size: 15mm;
+  font-size: 19mm;
   font-weight: 400;
-  margin: 0;
-  text-align: center;
+  margin: 0 0 0 20mm;
+  text-align: left;
   letter-spacing: 1px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
   line-height: 1;
-  width: 100%;
 }
 
 .cert-subtitle {
-  font-family: "Tangerine", "Brush Script MT", cursive;
-  text-align: right;
+  font-family: "UnifrakturMaguntia", "Playfair Display", Georgia, serif;
   color: #0e4d90;
-  font-size: 14mm;
-  font-weight: 700;
-  margin: 3mm 0 5mm 0;
+  font-size: 12mm;
+  font-weight: 400;
+  margin: 2mm 0 6mm 20mm;
   flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
+/* Invisible copy of "Certificate" set at the title's own font/size. It
+   reserves exactly as much horizontal space as the real title takes up —
+   whatever font actually ends up loaded — so "of Completion" always starts
+   right where "Certificate" ends, with no JS measurement needed. */
+.cert-subtitle-spacer {
+  display: inline-block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  vertical-align: top;
+  white-space: nowrap;
+  font-family: "UnifrakturMaguntia", "Playfair Display", Georgia, serif;
+  font-size: 19mm;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+/* ===== Body: paragraph-style content, justified, clearer & bigger ===== */
 .cert-body {
   flex-shrink: 0;
   position: relative;
@@ -185,24 +203,44 @@
 }
 
 .cert-body p {
-  font-size: 13.5px;
-  line-height: 1.75;
+  font-family: "Georgia", "Times New Roman", serif;
+  font-size: 15.5px;
+  line-height: 2;
   color: #1a1a1a;
-  margin: 0 0 8px 0;
-  text-align: justify;
+  margin: 0 0 10px 0;
+  text-align: left;
+  word-spacing: normal;
+  letter-spacing: normal;
 }
 
-.cert-field {
-  margin-top: 13px !important;
+.cert-paragraph {
+  text-indent: 0;
 }
 
+.cert-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 6mm !important;
+  gap: 12mm;
+}
+
+/* Fetched/dynamic values: underline now hugs the text itself (no fixed
+   min-width) so it doesn't leave excess blank space for justify to
+   convert into big word gaps. Text still reads centered on its own
+   underline since the underline is exactly as wide as the value. */
 .cert-line {
   display: inline-block;
   border-bottom: 1.5px dotted #333;
-  padding: 0 4px;
-  font-weight: 600;
+  padding: 0 6px;
+  font-family: "Georgia", "Times New Roman", serif;
+  font-size: 15.5px;
+  font-weight: 700;
+  color: #0a2b6b;
   max-width: 100%;
   text-align: center;
+  word-spacing: normal;
+  white-space: nowrap;
 }
 
 .cert-congrats {
@@ -226,12 +264,16 @@
   z-index: 2;
 }
 
+.cert-signature-inner {
+  display: inline-block;
+  text-align: center;
+}
+
 .cert-sign-img {
   height: 25mm;
   width: auto;
   display: block;
-  margin-left: auto;
-  margin-bottom: 3px;
+  margin: 0 auto 3px;
 }
 
 .cert-signatory-name {
