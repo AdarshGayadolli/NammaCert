@@ -9,7 +9,7 @@ import Register from "../pages/Register";
 import AdminLayout from "../layouts/AdminLayout";
 
 // Student Layout
-import StudentLayout from "../layouts/StudentLayout";
+import StudentLayout from "../layouts/StudentLayout"; 
 
 function App() {
   return (
