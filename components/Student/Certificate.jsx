@@ -89,7 +89,7 @@ export default function Certificate({ courseId, course }) {
           "Unable to load certificate."
       );
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
@@ -185,16 +185,34 @@ export default function Certificate({ courseId, course }) {
           </h2>
 
           <div className="cert-body">
-            <p className="cert-paragraph">
-              <strong>This is to certify</strong> that{" "}
-              <Line value={studentName} minWidth={190} />, a student of{" "}
-              <Line value={department} minWidth={170} /> from{" "}
-              <Line value={college} minWidth={210} /> (USN/AID No.{" "}
-              <Line value={usn} minWidth={110} />), has successfully
-              completed the course{" "}
-              <Line value={courseName} minWidth={190} /> over a duration of{" "}
-              <Line value={duration} minWidth={80} />, conducted by Medini
-              Technologies.
+            <p className="cert-line-row cert-intro-label">
+              <strong>This is to certify that:</strong>{" "}
+              <Line value={studentName} minWidth={220} />
+            </p>
+
+            <p className="cert-line-row">
+              <strong>Department:</strong>{" "}
+              <Line value={department} minWidth={200} />
+            </p>
+
+            <p className="cert-line-row">
+              <strong>College:</strong>{" "}
+              <Line value={college} minWidth={220} />
+            </p>
+
+            <p className="cert-line-row">
+              <strong>USN/AID No.:</strong>{" "}
+              <Line value={usn} minWidth={160} />
+            </p>
+
+            <p className="cert-line-row">
+              <strong>Course Completed:</strong>{" "}
+              <Line value={courseName} minWidth={200} />
+            </p>
+
+            <p className="cert-line-row">
+              <strong>Duration:</strong>{" "}
+              <Line value={duration} minWidth={100} />
             </p>
 
             <p className="cert-paragraph">

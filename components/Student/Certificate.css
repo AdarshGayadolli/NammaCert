@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Tangerine:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Playfair+Display:ital,wght@1,600&family=Tangerine:wght@700&display=swap');
 
 .cert-page-wrapper {
   display: flex;
@@ -116,7 +116,7 @@
 .cert-right {
   width: 70%;
   height: 100%;
-  padding: 8mm 8mm 8mm 12mm;   /* reduced right padding from 12mm to 8mm */
+  padding: 8mm 8mm 8mm 12mm; /* reduced right padding from 12mm to 8mm */
   display: flex;
   flex-direction: column;
   position: relative;
@@ -143,6 +143,7 @@
     ),
     rgba(255, 255, 255, 0.9);
 }
+
 .cert-banner {
   background: linear-gradient(120deg, #123a8f 0%, #0e4d90 55%, #0a2b6b 100%);
   padding: 4mm 12mm 6mm;
@@ -165,21 +166,25 @@
   line-height: 1;
 }
 
+/* "of Completion" — deliberately a different, more professional serif
+   rather than matching the heavy blackletter title. */
 .cert-subtitle {
-  font-family: "UnifrakturMaguntia", "Playfair Display", Georgia, serif;
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 600;
   color: #0e4d90;
-  font-size: 12mm;
-  font-weight: 400;
-  margin: 2mm 0 6mm 20mm;
+  font-size: 13mm;
+  margin: 3mm 0 6mm 20mm;
   flex-shrink: 0;
   white-space: nowrap;
   overflow: hidden;
+  letter-spacing: 0.5px;
 }
 
 /* Invisible copy of "Certificate" set at the title's own font/size. It
    reserves exactly as much horizontal space as the real title takes up —
    whatever font actually ends up loaded — so "of Completion" always starts
-   right where "Certificate" ends, with no JS measurement needed. */
+   right where "Certificate" ends, with no JS measurement needed. This stays
+   in the TITLE's font (not the subtitle's) purely to measure that width. */
 .cert-subtitle-spacer {
   display: inline-block;
   visibility: hidden;
@@ -193,7 +198,7 @@
   letter-spacing: 1px;
 }
 
-/* ===== Body: paragraph-style content, justified, clearer & bigger ===== */
+/* ===== Body content ===== */
 .cert-body {
   flex-shrink: 0;
   position: relative;
@@ -202,17 +207,25 @@
 
 .cert-body p {
   font-family: "Georgia", "Times New Roman", serif;
-  font-size: 15.5px;
-  line-height: 2;
+  font-size: 15px;
+  line-height: 1.5;
   color: #1a1a1a;
-  margin: 0 0 10px 0;
+  margin: 0 0 6px 0;
   text-align: left;
-  word-spacing: normal;
-  letter-spacing: normal;
+}
+
+/* Each detail on its own line: "Label: value" */
+.cert-line-row {
+  margin: 0 0 5px 0 !important;
+}
+
+.cert-intro-label {
+  margin-bottom: 5px !important;
 }
 
 .cert-paragraph {
   text-indent: 0;
+  margin-top: 4px !important;
 }
 
 .cert-meta {
@@ -223,21 +236,18 @@
   gap: 12mm;
 }
 
-/* Fetched/dynamic values: underline now hugs the text itself (no fixed
-   min-width) so it doesn't leave excess blank space for justify to
-   convert into big word gaps. Text still reads centered on its own
-   underline since the underline is exactly as wide as the value. */
+/* Fetched/dynamic values: underline hugs the text itself so it doesn't
+   leave excess blank space. */
 .cert-line {
   display: inline-block;
   border-bottom: 1.5px dotted #333;
   padding: 0 6px;
   font-family: "Georgia", "Times New Roman", serif;
-  font-size: 15.5px;
+  font-size: 15px;
   font-weight: 700;
   color: #0a2b6b;
   max-width: 100%;
   text-align: center;
-  word-spacing: normal;
   white-space: nowrap;
 }
 
