@@ -1,14 +1,363 @@
-*{
-    height: 100%;
-    width: 100%;
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Playfair+Display:ital,wght@1,600&family=Tangerine:wght@700&display=swap');
+
+.civil-cert-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background: #eee;
+  min-height: 100vh;
 }
-h1{
-    text-align: center;
-    font-size: 30px;
-    color: #000;
-}   
-div{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+.civil-cert-download-btn {
+  margin-bottom: 16px;
+  padding: 12px 28px;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+/* Fixed to A4 landscape physical size (297mm x 210mm) so on-screen preview
+   and printed output always match, and it's always exactly one page. */
+.civil-cert-container {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  width: 297mm;
+  height: 210mm;
+  box-sizing: border-box;
+  background: url("../../src/assets/certificate/civil_fullback.jpeg") center / cover
+    no-repeat, #fff;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+  border: 3mm solid #111;
+  overflow: hidden;
+}
+
+/* Decorative "tape" corners */
+.civil-cert-container::before,
+.civil-cert-container::after {
+  content: "";
+  position: absolute;
+  top: -5mm;
+  width: 29mm;
+  height: 10mm;
+  background: rgba(255, 250, 235, 0.55);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+}
+
+.civil-cert-container::before {
+  left: 12mm;
+  transform: rotate(-6deg);
+}
+
+.civil-cert-container::after {
+  right: 12mm;
+  transform: rotate(6deg);
+}
+
+/* Left panel */
+.civil-cert-left {
+  width: 30%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background: #0e4d90;
+  box-sizing: border-box;
+}
+
+.civil-cert-face-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  z-index: 1;
+  display: block;
+  margin: 0;
+}
+
+.civil-cert-logo {
+  position: absolute;
+  top: 6mm;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 58mm;
+  height: auto;
+  z-index: 3;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));
+  margin: 0;
+}
+
+.civil-cert-footnote {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  margin: 0;
+  font-size: 6.5px;
+  line-height: 1.5;
+  color: #f2f5fb;
+  padding: 8mm 6mm 5mm;
+  background: linear-gradient(
+    180deg,
+    rgba(9, 32, 74, 0) 0%,
+    rgba(6, 18, 50, 0.75) 35%,
+    rgba(6, 18, 50, 0.92) 100%
+  );
+}
+
+.civil-cert-right {
+  width: 70%;
+  height: 100%;
+  padding: 8mm 8mm 8mm 12mm; /* reduced right padding from 12mm to 8mm */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0) 35%,
+      rgba(10, 43, 107, 0.05) 50%,
+      rgba(255, 255, 255, 0) 65%
+    ),
+    radial-gradient(
+      circle at 85% 8%,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(255, 255, 255, 0) 55%
+    ),
+    repeating-linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.02) 0px,
+      rgba(0, 0, 0, 0.02) 1px,
+      transparent 1px,
+      transparent 16px
+    ),
+    rgba(255, 255, 255, 0.9);
+}
+
+.civil-cert-banner {
+  background: linear-gradient(120deg, #0f4a5f 0%, #0a3445 55%, #03212d 100%);
+  padding: 4mm 12mm 6mm;
+  margin: 8mm -12mm 0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.civil-cert-title {
+  font-family: "UnifrakturMaguntia", "Playfair Display", Georgia, serif;
+  color: #ffffff;
+  font-size: 19mm;
+  font-weight: 400;
+  margin: 0 0 0 20mm;
+  text-align: left;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+  line-height: 1;
+}
+
+/* "of Completion" — deliberately a different, more professional serif
+   rather than matching the heavy blackletter title. */
+.civil-cert-subtitle {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 600;
+  color: #0e4d90;
+  font-size: 13mm;
+  margin: 3mm 0 6mm 20mm;
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+}
+
+/* Invisible copy of "Certificate" set at the title's own font/size. It
+   reserves exactly as much horizontal space as the real title takes up —
+   whatever font actually ends up loaded — so "of Completion" always starts
+   right where "Certificate" ends, with no JS measurement needed. This stays
+   in the TITLE's font (not the subtitle's) purely to measure that width. */
+.civil-cert-subtitle-spacer {
+  display: inline-block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  vertical-align: top;
+  white-space: nowrap;
+  font-family: "UnifrakturMaguntia", "Playfair Display", Georgia, serif;
+  font-size: 19mm;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+/* ===== Body content ===== */
+.civil-cert-body {
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.civil-cert-body p {
+  font-family: "Georgia", "Times New Roman", serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #1a1a1a;
+  margin: 0 0 6px 0;
+  text-align: left;
+}
+
+/* Each detail on its own line: "Label: value" */
+.civil-cert-line-row {
+  margin: 0 0 5px 0 !important;
+}
+
+.civil-cert-intro-label {
+  margin-bottom: 5px !important;
+}
+
+.civil-cert-paragraph {
+  text-indent: 0;
+  margin-top: 4px !important;
+}
+
+.civil-cert-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 6mm !important;
+  gap: 12mm;
+}
+
+/* Fetched/dynamic values: underline hugs the text itself so it doesn't
+   leave excess blank space. */
+.civil-cert-line {
+  display: inline-block;
+  border-bottom: 1.5px dotted #333;
+  padding: 0 6px;
+  font-family: "Georgia", "Times New Roman", serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #0a2b6b;
+  max-width: 100%;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.civil-cert-congrats {
+  font-family: "Tangerine", "Brush Script MT", cursive;
+  font-size: 16mm;
+  font-weight: 700;
+  color: #0e4d90;
+  margin: 3mm 0 0 0;
+  flex-shrink: 0;
+}
+
+.civil-cert-signature {
+  margin-top: auto;
+  text-align: right;
+  font-size: 11px;
+  font-weight: 600;
+  color: #1a1a1a;
+  line-height: 1.6;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.civil-cert-signature-inner {
+  display: inline-block;
+  text-align: center;
+}
+
+.civil-cert-sign-img {
+  height: 25mm;
+  width: auto;
+  display: block;
+  margin: 0 auto 3px;
+}
+
+.civil-cert-signatory-name {
+  margin-bottom: 2px;
+}
+
+/* ===== Certificate wording template (same text layout as the sample) ===== */
+.civil-cert-body p.civil-cert-tpl {
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #1a1a1a;
+  margin: 0 0 4px 0;
+  text-align: left;
+}
+
+.civil-cert-body p.civil-cert-tpl-gap {
+  margin-top: 14px;
+}
+
+/* Print settings */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  /* Force backgrounds/colors to actually print — without this, Chrome
+     strips the navy banner, left panel fill, and footnote gradient. */
+  .civil-cert-page-wrapper,
+  .civil-cert-page-wrapper * {
+    visibility: visible;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    accent-color: exact !important;
+  }
+
+  .civil-cert-page-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background: #fff;
+  }
+
+  .civil-cert-container {
+    box-shadow: none;
+    width: 297mm;
+    height: 210mm;
+    margin: 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .civil-cert-container::before,
+  .civil-cert-container::after {
+    display: none;
+  }
+
+  /* Explicit physical page size matching the container exactly — this is
+     what makes the print dialog auto-select Landscape correctly instead
+     of squishing the layout into Portrait. */
+  @page {
+    size: 297mm 210mm;
+    margin: 0;
+  }
 }

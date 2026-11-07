@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../src/services/api";
-import Certificate from "../../components/Student/Certificate";
+import Civil_Certificate from "../../components/Student/Civil_Certificate";
 
 export default function FinishedCourse() {
   const [loading, setLoading] = useState(true);
@@ -67,7 +67,7 @@ export default function FinishedCourse() {
           ← Back to Finished Courses
         </button>
 
-        <Certificate course={selectedCourse} />
+        <Civil_Certificate course={selectedCourse} />
       </div>
     );
   }
