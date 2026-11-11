@@ -1,133 +1,130 @@
-.search-course-container{
-    padding:30px;
-    background:#f5f5f5;
-    min-height:100vh;
+.search-course-container {
+  min-height: 100%;
+  padding: clamp(18px, 2.5vw, 30px);
+  background: transparent;
 }
 
-/* Header */
-
-.top-bar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:25px;
-    flex-wrap:wrap;
-    gap:15px;
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
 }
 
-.top-bar h2{
-    font-size:28px;
-    font-weight:600;
-    color:#111;
+.top-bar h2 {
+  color: var(--color-ink);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.05em;
 }
 
-.top-bar input{
-    width:350px;
-    padding:12px 18px;
-    border:1px solid #d9d9d9;
-    border-radius:8px;
-    outline:none;
-    font-size:15px;
-    background:#fff;
-    transition:.3s;
+.top-bar input {
+  width: min(100%, 350px);
+  margin: 0;
+  padding: 11px 14px;
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  font-size: 12px;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
 }
 
-.top-bar input:focus{
-    border-color:#000;
+.top-bar input:focus {
+  border-color: var(--color-primary);
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(33, 107, 97, 0.1);
 }
 
-/* Table */
-
-.course-table{
-    width:100%;
-    border-collapse:collapse;
-    background:#fff;
-    border-radius:12px;
-    overflow:hidden;
-    box-shadow:0 3px 12px rgba(0,0,0,.08);
+.course-table {
+  width: 100%;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  border-collapse: separate;
+  border-spacing: 0;
+  box-shadow: 0 8px 24px rgba(30, 45, 54, 0.04);
 }
 
-.course-table thead{
-    background:#000;
-    color:#fff;
+.course-table thead {
+  color: #64737a;
+  background: #f5f8f8;
 }
 
-.course-table thead th{
-    padding:16px;
-    text-align:left;
-    font-size:14px;
-    font-weight:500;
-    white-space:nowrap;
+.course-table thead th {
+  padding: 13px 15px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: left;
+  white-space: nowrap;
 }
 
-.course-table tbody tr{
-    border-bottom:1px solid #ececec;
-    transition:.3s;
+.course-table tbody tr {
+  transition: background 150ms ease;
 }
 
-.course-table tbody tr:hover{
-    background:#f8f8f8;
+.course-table tbody tr:hover {
+  background: #f8fbfa;
 }
 
-.course-table tbody td{
-    padding:15px;
-    font-size:14px;
-    color:#333;
-    vertical-align:middle;
+.course-table tbody td {
+  padding: 14px 15px;
+  color: #45535a;
+  border-bottom: 1px solid #edf0f1;
+  font-size: 11px;
+  vertical-align: middle;
 }
 
-.course-table tbody tr:last-child{
-    border-bottom:none;
+.course-table tbody tr:last-child td {
+  border-bottom: 0;
 }
 
-/* No Data */
-
-.no-data{
-    text-align:center;
-    padding:35px;
-    color:#888;
-    font-size:15px;
+.no-data {
+  padding: 35px;
+  color: var(--color-muted);
+  font-size: 12px;
+  text-align: center;
 }
 
-/* Assign Button */
-
-.assign-btn{
-    background:#000;
-    color:#fff;
-    border:none;
-    padding:9px 16px;
-    border-radius:6px;
-    cursor:pointer;
-    font-size:13px;
-    font-weight:500;
-    transition:.3s;
+.assign-btn {
+  padding: 8px 13px;
+  color: #fff;
+  background: var(--color-primary);
+  border: 0;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 700;
+  transition: background 160ms ease, transform 160ms ease;
 }
 
-.assign-btn:hover{
-    background:#222;
+.assign-btn:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-1px);
 }
 
-/* Responsive */
+@media (max-width: 1200px) {
+  .search-course-container {
+    overflow-x: auto;
+  }
 
-@media(max-width:1200px){
-
-    .search-course-container{
-        overflow-x:auto;
-    }
-
-    .course-table{
-        min-width:1200px;
-    }
+  .course-table {
+    min-width: 960px;
+  }
 }
 
-@media(max-width:768px){
+@media (max-width: 768px) {
+  .top-bar {
+    align-items: stretch;
+    flex-direction: column;
+  }
 
-    .top-bar{
-        flex-direction:column;
-        align-items:flex-start;
-    }
-
-    .top-bar input{
-        width:100%;
-    }
+  .top-bar input {
+    width: 100%;
+  }
 }

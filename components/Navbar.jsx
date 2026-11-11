@@ -8,26 +8,20 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="logo-container">
-        <img src={logo} alt="Medini Logo" className="logo-image" />
+        <Link to="/" aria-label="Medini home">
+          <img src={logo} alt="Medini Logo" className="logo-image" />
+        </Link>
       </div>
 
       <div className="nav-right">
-        <div className="language">
-          <span>Choose Language</span>
-
-          <select>
-            <option>English</option>
-            <option>Hindi</option>
-          </select>
-        </div>
-
-        {/* <Link to="/login" className="nav-btn">
-          Login
-        </Link> */}
-
-        {/* <Link to="/register" className="nav-btn register">
-          Register
-        </Link> */}
+        <Link to="/" className="nav-link">Home</Link>
+        <a href="/#about" className="nav-link">About</a>
+        <Link to="/login?role=student" className="nav-login nav-login-student">
+          Student Login
+        </Link>
+        <Link to="/login?role=admin" className="nav-login nav-login-admin">
+          Admin Login
+        </Link>
       </div>
     </nav>
   );
